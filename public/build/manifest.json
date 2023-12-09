@@ -1,0 +1,6 @@
+{
+  "build/app.css": "http://localhost:8080/build/app.css",
+  "build/app.js": "http://localhost:8080/build/app.js",
+  "build/runtime.js": "http://localhost:8080/build/runtime.js",
+  "build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_mini-css-extract-plugin_-a95a48.js": "http://localhost:8080/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_mini-css-extract-plugin_-a95a48.js"
+}

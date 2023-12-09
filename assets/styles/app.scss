@@ -1,0 +1,10 @@
+// PLEASE IF YOU'RE USING url() THEN CHECK THIS LINK:
+// https://symfony.com/bundles/SassBundle/current/index.html#limitation-url-relative-paths
+
+// This file is for Bootstrap SCSS
+@import '../../vendor/twbs/bootstrap/scss/bootstrap';
+
+$awesome-color: skyblue;
+body {
+  background-color: $awesome-color;
+}
