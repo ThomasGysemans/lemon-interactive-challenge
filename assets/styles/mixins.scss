@@ -1,0 +1,19 @@
+@mixin row-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin vertical-center {
+  flex-direction: column;
+  @include row-center();
+}
+
+// MUST BE COMBINED WITH:
+// - display: inline-block; OR
+// - display: block;
+@mixin ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

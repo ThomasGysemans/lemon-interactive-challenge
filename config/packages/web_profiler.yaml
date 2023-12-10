@@ -5,6 +5,7 @@ when@dev:
 
     framework:
         profiler:
+            collect: false
             only_exceptions: false
             collect_serializer_data: true
 

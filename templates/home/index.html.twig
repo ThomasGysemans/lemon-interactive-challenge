@@ -3,7 +3,86 @@
 {% block title %}My first page in this project!{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-        <h1>Symfony for the web</h1>
+    <div class="page homepage">
+        <main>
+            <img src={{ asset('images/main-background.jpg') }} alt="Des personnes lèvent les mains en l'air durant un concert de nuit" />
+            <div class="overlay">
+                <header>
+                    <twig:FancyUnderlinedText>
+                        <a class="connection-link" href="#">Se connecter</a>
+                    </twig:FancyUnderlinedText>
+                </header>
+                <h1>Rejoignez nos<br />
+                    événements, et <br />
+                    mettons l’ambiance</h1>
+                <p>Nous sommes une organisation qui planifie des concerts dans les Hauts-de-France pour des levées de fonds.</p>
+                <twig:Button:Link href="#evenements">Voir les événements</twig:Button:Link>
+            </div>
+            
+            <div class="main-image-transition"></div>
+        </main>
+        <section id="evenements">
+            <div class="container-section-title">
+                <twig:FancyUnderlinedText>
+                    <h2>Les événements prévus ({{ events|length }})</h2>
+                </twig:FancyUnderlinedText>
+            </div>
+            <p>Les événements sont triés dans l’ordre chronologique par défaut. Vous pouvez affiner cela en choisissant un intervalle de dates :</p>
+            <form method="GET">
+                <p>
+                    Sélectionner les événements du&nbsp;
+                    <input type="date" placeholder="dd/mm/aaaa" title="Date minimale" name="min" required />
+                    &nbsp;au&nbsp;
+                    <input type="date" placeholder="dd/mm/aaaa" title="Date maximale" name="max" required />
+                    &nbsp;
+                    <input type="submit" value="Appliquer" />
+                </p>
+            </form>
+            <div class="event-grid">
+                {% for event in events %}
+                    <div class="event-card">
+                        <h3>{{ event.title }}</h3>
+                        <div></div>
+                        <p>Du {{ event.beginDate|date("d/m/Y", "Europe/Paris") }}, {{ event.beginDate|date("H:m", "Europe/Paris") }}, au {{ event.endDate|date("d/m/Y", "Europe/Paris") }}, {{ event.endDate|date("H:m", "Europe/Paris") }}</p>
+                        <p>{{ event.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <footer>
+            <twig:FooterBackgroundImage />
+            <div class="footer-content">
+                <div>
+                    <h2>
+                        Partagez<br />
+                        vos<br />
+                        événements
+                    </h2>
+                    <div class="social-media-container">
+                        <p>
+                            <img src={{ asset('images/icons/youtube-icon.svg') }} alt="" />
+                            <a href="#">Youtube</a>
+                        </p>
+                        <p>
+                            <img src={{ asset('images/icons/facebook-icon.svg') }} alt="" />
+                            <a href="#">Facebook</a>
+                        </p>
+                        <p>
+                            <img src={{ asset('images/icons/twitter-icon.svg') }} alt="" />
+                            <a href="#">Twitter</a>
+                        </p>
+                        <p>
+                            <img src={{ asset('images/icons/insta-icon.svg') }} alt="" />
+                            <a href="#">Instagram</a>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Politique de confidentialité</a>
+                    <a href="#">Conditions générales</a>
+                </div>
+            </div>
+        </footer>
     </div>
 {% endblock %}

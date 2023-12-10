@@ -1,0 +1,23 @@
+@import "root";
+
+* {
+  font-family: $main-font-family;
+
+  :focus {
+    outline: 2px solid $link-color;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background-color: $primary-color;
+}
+
+.page {
+  display: contents;
+}

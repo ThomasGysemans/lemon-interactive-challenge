@@ -1,4 +1,4 @@
-.PHONY: controller entity migration migrate load_fixtures build dev stop restart
+.PHONY: controller entity migration migrate load_fixtures build dev stop restart component fixture
 
 PHP = php bin/console
 
@@ -27,8 +27,8 @@ load_fixtures: bin/console
 	${PHP} doctrine:fixtures:load
 
 build:
-	${PHP} sass:build
-	${PHP} typescript:build
+	${PHP} sass:build -v
+	${PHP} typescript:build -v
 	${PHP} asset-map:compile
 
 dev:
@@ -42,3 +42,11 @@ stop:
 restart:
 	@$(MAKE) stop
 	@$(MAKE) dev
+
+component:
+	${PHP} make:twig-component
+
+# Use `make fixture fixt=HELLO` to create a fixture named "HELLO"
+fixt :=
+fixture:
+	${PHP} make:fixtures $(fixt)

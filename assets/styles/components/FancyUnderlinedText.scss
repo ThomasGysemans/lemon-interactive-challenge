@@ -1,0 +1,13 @@
+@import "../root";
+@import "../mixins";
+
+.fancy-underlined-text {
+  position: relative;
+}
+
+.fancy-underlined-text img {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+}

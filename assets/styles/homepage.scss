@@ -1,0 +1,255 @@
+@import "root";
+@import "mixins";
+
+$homepage-padding: 0 9vw;
+$event-card-background-color: #490049;
+
+.homepage > main {
+  position: relative;
+  height: 100vh;
+  overflow-y: visible;
+
+  & > img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    pointer-events: none;
+  }
+}
+
+.homepage main > .overlay {
+  padding: $homepage-padding;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(#000, .6);
+}
+
+.homepage main > .overlay > header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 20vh;
+  margin-bottom: 50px;
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.7rem;
+  }
+}
+
+.homepage main > .overlay > h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 2.8rem;
+  font-family: $title-font-family;
+}
+
+.homepage main > .overlay > p {
+  color: #fff;
+  font-size: 1.8rem;
+  max-width: 430px;
+  margin: 35px 0;
+}
+
+.homepage .connection-link {
+  transition: text-shadow 200ms ease;
+
+  &:hover,
+  &:focus {
+    text-shadow: 0 1px 1px #fff;
+  }
+}
+
+.homepage > main > .main-image-transition {
+  position: absolute;
+  bottom: -2vh;
+  left: 0;
+  width: 100%;
+  height: 15vh;
+  background: linear-gradient(to bottom, transparent 15%, $primary-color 80%);
+}
+
+.homepage > section .container-section-title {
+  width: 100%;
+  @include row-center;
+
+  .fancy-underlined-text {
+    max-width: 50vw;
+  }
+}
+
+.homepage > main + section {
+  padding-top: 30px;
+}
+
+.homepage > section {
+  padding: $homepage-padding;
+  background-color: $primary-color;
+  min-height: 100vh;
+}
+
+.homepage > section h2 {
+  color: #fff;
+  margin: 0;
+  font-size: 1.9rem;
+  margin: 0 0 25px 0;
+}
+
+.homepage > section > p,
+.homepage > section > form > p {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.homepage > section > p:first-of-type {
+  margin: 8vh 0 0 0;
+  max-width: 40vw;
+}
+
+.homepage > section > form input {
+  padding: 5px 10px;
+
+  &[type="submit"] {
+    cursor: pointer;
+  }
+}
+
+/*
+*
+* Event cards
+*
+*/
+
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 460px));
+  gap: 40px;
+  margin: 50px 0;
+  place-content: center;
+}
+
+.event-card {
+  width: 100%;
+  max-height: 450px;
+  background-color: $event-card-background-color;
+  padding: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.event-card > h3 {
+  color: #fff;
+  font-size: 1.3rem;
+  font-family: $title-font-family;
+  max-width: 80%; // to let room for the outdated events
+  margin: 0;
+  @include ellipsis;
+
+  & + div {
+    width: 40%;
+    height: 2px;
+    background-color: #fff;
+    margin: 15px 0;
+  }
+}
+
+.event-card > p {
+  margin: 0;
+  color: #fff;
+  font-size: 1.15rem;
+
+  &:first-of-type {
+    margin-bottom: 15px;
+  }
+}
+
+/*
+*
+* Footer
+*
+*/
+
+footer {
+  position: relative;
+}
+
+.footer-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 21vw 5vh 21vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.footer-content > div:first-of-type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-content > div:first-of-type h2 {
+  color: #fff;
+  font-size: 2.8rem;
+  margin: 0;
+  line-height: 65px;
+  margin-right: 50px;
+}
+
+.footer-content > div:first-of-type * {
+  font-family: $title-font-family;
+}
+
+.footer-content .social-media-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  p {
+    width: 200px;
+    margin: 0 50px 20px 0;
+    color: #fff;
+    display: flex;
+    align-items: center;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      font-size: 1.4rem;
+    }
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+  }
+}
+
+.footer-content > div:last-of-type {
+  @include row-center;
+  margin-top: 10vh;
+  
+  a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    opacity: .8;
+    margin-right: 30px;
+    transition: opacity 200ms ease;
+    
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+  }
+}
