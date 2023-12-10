@@ -18,9 +18,6 @@ return [
         'path' => './assets/typescript/app.ts',
         'entrypoint' => true,
     ],
-    'bootstrap' => [
-        'version' => '5.3.2',
-    ],
     '@popperjs/core' => [
         'version' => '2.11.8',
     ]
