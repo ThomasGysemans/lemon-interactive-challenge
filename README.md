@@ -1,110 +1,87 @@
-# Symfony Web Essentials (for Symfony 6.4)
+# Lemon Interactive Challenge
 
-This repo holds the basic tools for creating a web application using Symfony.
+Ce repo contient le code du défi posé par [Lemon Interactive](https://www.lemon-interactive.fr/) dans le cadre d'un recrutement en tant que stagiaire (pour une durée de 3 mois). Il s'agit d'un site web, réalisé avec [Symfony](https://symfony.com/).
 
-It includes:
+![Image de la première page du site](/screenshots/maquette-homepage.jpg)
 
-- [AssetMapper](https://symfony.com/doc/current/frontend/asset_mapper.html)
-- [SCSS](https://symfony.com/bundles/SassBundle/current/index.html)
-- [TypeScript](https://github.com/sensiolabs/AssetMapperTypeScriptBundle)
-- [Bootstrap](https://getbootstrap.com/) SCSS
+## Auteur
 
-The following commands were used to create this template (in this order):
+[Thomas GYSEMANS](https://portfolio.sciencesky.fr/), actuellement en étude d'informatique au BUT de Villeneuve d'Ascq.
+
+Le projet a été débuté le 10 décembre 2023.
+
+## Stack technique
+
+- [SCSS](https://sass-lang.com/) via [SassBundle](https://symfony.com/bundles/SassBundle/current/index.html)
+- [TypeScript](https://www.typescriptlang.org/) via [AssetMapperTypeScriptBundle](https://github.com/sensiolabs/AssetMapperTypeScriptBundle)
+- [PHP](https://www.php.net/) 8.2
+- Symfony 6.4 (Latest LTS vesion)
+- [AssetMapper](https://symfony.com/doc/current/frontend/asset_mapper.html) of Symfony
+
+Ce projet se base sur mon template: [symfony-web-essentials](https://github.com/ThomasGysemans/symfony-web-essentials), créé pour l'occasion, car initialiser un projet web avec Symfony, contenant les meilleurs outils du développeur front-end (SCSS et TypeScript, à mon opinion) requièrent une quantité non-négligeable de configurations (beaucoup de commandes `composer` notamment).
+
+## Base de données et entités
+
+Puisque le back-end n'est pas la partie importante de ce challenge, j'ai utilisé une base de données SQLite ([plus de détails](https://github.com/ThomasGysemans/symfony-web-essentials?tab=readme-ov-file#database)).
+
+Les entités sont les suivantes:
+
+- `Event` (un événement publié sur la plateforme)
+
+|Colonne|Type|
+|-------|----|
+|title|varchar(255)|
+|description|text|
+|location|varchar(255)|
+|beginDate|DateTime|
+|endDate|DateTime|
+
+## Fixtures
+
+Une fixture est disponible pour auto-générer 9 événements.
+
+Pour charger les fixtures:
 
 ```bash
-composer create-project symfony/skeleton:"6.4.*" symfony-web-essentials
-cd symfony-web-essentials
-composer require webapp
-composer require symfony/asset-mapper symfony/asset symfony/twig-pack
-php bin/console importmap:require bootstrap
-composer require symfonycasts/sass-bundle
-composer require sensiolabs/typescript-bundle
-composer require twbs/bootstrap
+make load_fictures
 ```
-
-## Entrypoints
-
-This template comes with a unique Controller: [HomeController](/src/Controller/HomeController.php) (with route="/").
-
-The TypeScript entrypoint is [app.ts](/assets/typescript/app.ts).
-
-The SCSS main file is [app.scss](/assets/styles/app.scss).
-
-## Why AssetMapper instead of Webpack?
-
-A trauma: https://stackoverflow.com/questions/77632962/i-cannot-create-a-second-webpack-project-on-my-computer-because-it-only-runs-the
-
-## Database
-
-The database were also modified so as to use `SQLite`:
-
-In `/.env`:
-
-```
-DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
-# DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8.0.32&charset=utf8mb4"
-# DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
-# DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=15&charset=utf8"
-```
-
-The first line was uncommented, and the last line was commented.
 
 ## Makefile
 
-A few commands are available in the [Makefile](./Makefile) whose purpose is to shorten commands:
+Pour simplifier les commandes, j'ai créé un fichier [Makefile](./Makefile). Puisque le projet requière de _watch_ les fichiers SCSS et TypeScript et de les compiler au moindre changement, il faut utiliser ces commandes-ci pour lancer le serveur:
 
-- Run the development server with SASS and TypeScript being watched:
+```bash
+php bin/console sass:build -q --watch &
+php bin/console sass:typescript -q --watch &
+symfony server:start -d
+```
+
+Ces commandes sont simplifiées:
 
 ```bash
 make dev
-```
-
-- Build the app (for production release):
-
-```bash
-make build
-```
-
-- Stop the server:
-
-```bash
-make stop
-```
-
-- Restart the server:
-
-```bash
+# ou
 make restart
 ```
 
-- Create a Controller:
+De nombreuses autres commandes sont disponibles dans le [Makefile](./Makefile), notamment pour migrer, créer des composants Twig, etc.
 
-```bash
-make controller ctrl=NAME
-# ou 
-make controller
-```
+## Obstacles rencontrés
 
-- Create an Entity:
+Premièrement, concernant le sujet, j'ai eu du mal à comprendre ce qu'est une "organisation régionale". Puisqu'il s'agit d'un défi destiné à prouver les compétences du candidat, je ne me suis pas attardé là-dessus et j'ai imaginé une association qui organise des concerts caritatifs dans les Hauts-de-France.
 
-```bash
-make entity
-```
+Dans ce thème-là, j'ai conçu un design à l'esprit modern sur Figma: https://www.figma.com/file/teHyRBIE9yh1OeU6IhFA9g/ProjetLemonInteractive?type=design&node-id=0%3A1&mode=design&t=osOP9szGN4sCx0ll-1
 
-- Create migrations:
+Ensuite, je ne connaissais Symfony que de nom, et par conséquent apprendre Symfony était le premier obstacle à surmonter. Heureusement, j'avais déjà fait du PHP (v7) il y a quelques années, et j'ai de l'expérience avec des frameworks similaires, donc je me suis rapidement adapté.
 
-```bash
-make migration
-```
+Le plus gros problème que j'ai pu avoir avec Symfony c'est l'utilisation de [Webpack Encore](https://symfony.com/doc/current/frontend/encore/installation.html) comme vous pouvez le voir ici : https://stackoverflow.com/questions/77632962/i-cannot-create-a-second-webpack-project-on-my-computer-because-it-only-runs-the
 
-- Migrate:
+Le second problème que j'ai eu avec Symfony c'est pour utiliser plusieurs fichiers SCSS: https://stackoverflow.com/questions/77634279/how-can-i-use-multiple-scss-files-in-symfony
 
-```bash
-make migrate
-```
+Actuellement, tous les fichiers sont importés dans [app.scss](/assets/styles/app.scss) via la règle `@import`, ce qui n'est pas idéal (haut risque de conflit de nommage des classes).
 
-- Load fixtures:
+## Bootstrap
 
-```bash
-make load_fixtures
-```
+J'ai la ferme conviction que l'utilisation de Bootstrap nuie à l'originalité d'un site web et joue plutôt le rôle de contrainte dans le processus de création d'un site au thème moderne. Les 11 000 lignes de code que Bootstrap utilise augmentent le poids de l'application, et elles ne sont jamais toutes utilisées.
+
+Je dois avouer que pour créer ce site, je n'ai pas été en capacité d'utiliser Bootstrap. J'ai réussi à concevoir le site dans de bons délais malgré les cours et mes obligations personnelles, et je sais bien qu'utiliser Bootstrap m'aurait freiner plus qu'autre chose. J'adore le (S)CSS et j'adore tout faire de 0.
