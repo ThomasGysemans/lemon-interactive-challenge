@@ -2,7 +2,6 @@
 @import "mixins";
 
 $homepage-padding: 0 9vw;
-$event-card-background-color: #490049;
 
 .homepage > main {
   position: relative;
@@ -137,7 +136,7 @@ $event-card-background-color: #490049;
 .event-card {
   width: 100%;
   max-height: 450px;
-  background-color: $event-card-background-color;
+  background-color: $secondary-color;
   padding: 20px;
   border-radius: 10px;
   box-sizing: border-box;

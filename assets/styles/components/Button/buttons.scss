@@ -1,20 +1,26 @@
 @import "../../root";
 
-.button-link {
+.btn {
   display: inline-block;
   cursor: pointer;
   padding: 10px 20px;
   box-sizing: border-box;
   font-size: 1.1rem;
   border-radius: 5px;
+}
+
+.btn-primary {
   background-color: rgba(#fff, .1);
   border: 1px solid #fff;
   color: #fff;
-  text-decoration: none;
   transition: background-color 200ms ease;
 
   &:hover,
   &:focus {
     background-color: rgba(#fff, .2);
   }
+}
+
+a.btn-primary {
+  text-decoration: none;
 }

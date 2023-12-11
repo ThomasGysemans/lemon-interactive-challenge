@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <main class="page auth">
+        <twig:LeaveAuthButton />
+        <aside>
+            <h1>Se connecter</h1>
+            <twig:AuthSpeech />
+        </aside>
+        <form method="post">
+            {% if error %}
+                <p class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+            {% endif %}
+            
+            <twig:Input type="email" name="email" placeholder="Adresse mail" autocomplete="email" value="{{ last_username }}" />
+            <twig:Input type="password" name="password" placeholder="Mot de passe" autocomplete="current_password" />
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+            <twig:Button:Primary>Se connecter</twig:Button:Primary>
+            <p>
+                Vous n'avez pas encore de compte ?<br />
+                <a href="{{ path('app_register') }}">Inscrivez-vous</a>
+            </p>
+        </form>
+    </main>
+{% endblock %}

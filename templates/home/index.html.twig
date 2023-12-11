@@ -9,7 +9,11 @@
             <div class="overlay">
                 <header>
                     <twig:FancyUnderlinedText>
-                        <a class="connection-link" href="#">Se connecter</a>
+                        {% if app.user %}
+                            <a class="connection-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                        {% else %}
+                            <a class="connection-link" href="{{ path('app_login') }}">Se connecter</a>
+                        {% endif %}
                     </twig:FancyUnderlinedText>
                 </header>
                 <h1>Rejoignez nos<br />
@@ -18,7 +22,7 @@
                 <p>Nous sommes une organisation qui planifie des concerts dans les Hauts-de-France pour des levées de fonds.</p>
                 <twig:Button:Link href="#evenements">Voir les événements</twig:Button:Link>
             </div>
-            
+
             <div class="main-image-transition"></div>
         </main>
         <section id="evenements">

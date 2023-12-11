@@ -289,6 +289,9 @@
     "symfonycasts/sass-bundle": {
         "version": "v0.3.0"
     },
+    "symfonycasts/verify-email-bundle": {
+        "version": "v1.15.0"
+    },
     "twig/extra-bundle": {
         "version": "v3.8.0"
     }

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <main class="page auth inscription">
+        <twig:LeaveAuthButton />
+        <aside>
+            <h1>S'inscrire</h1>
+            <twig:AuthSpeech />
+        </aside>
+        {{ form_start(registrationForm) }}
+            {% if invalid|default %}
+                <p class="error">Le formulaire n'est pas valide.</p>
+            {% endif %}
+            
+            {{ form_widget(registrationForm.username) }}
+            {{ form_widget(registrationForm.email) }}
+            {{ form_widget(registrationForm.plainPassword) }}
+            {{ form_row(registrationForm.agreeTerms, { label: "Accepter les conditions générales" }) }}
+
+            <twig:Button:Primary>S'inscrire</twig:Button:Primary>
+            <p>
+                Vous avez déjà un compte ?<br />
+                <a href="{{ path('app_login') }}">Connectez-vous</a>
+            </p>
+        {{ form_end(registrationForm) }}
+    </main>
+{% endblock %}

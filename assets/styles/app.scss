@@ -4,5 +4,8 @@
 @import "root";
 @import "globals";
 @import "homepage";
-@import "components/FancyUnderlinedText.scss";
-@import "components/Button/Link.scss";
+@import "auth";
+@import "components/FancyUnderlinedText";
+@import "components/Button/buttons";
+@import "components/Input";
+@import "components/LeaveAuthButton";

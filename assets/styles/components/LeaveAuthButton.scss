@@ -1,0 +1,28 @@
+.leave-auth {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: .8;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    top: 35px;
+    left: 35px;
+    font-size: 1.3rem;
+  }
+
+  img {
+    position: relative;
+    top: -50px;
+    left: -10%;
+    min-width: 150px;
+    pointer-events: none;
+    user-select: none;
+  }
+}
