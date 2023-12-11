@@ -22,7 +22,7 @@ Ce projet se base sur mon template: [symfony-web-essentials](https://github.com/
 
 ## Base de données et entités
 
-Puisque le back-end n'est pas la partie importante de ce challenge, j'ai utilisé une base de données SQLite ([plus de détails](https://github.com/ThomasGysemans/symfony-web-essentials?tab=readme-ov-file#database)).
+Le back-end n'est pas la partie importante de ce challenge, mais j'avais envie de livrer un site complet, donc j'ai utilisé une base de données SQLite ([plus de détails](https://github.com/ThomasGysemans/symfony-web-essentials?tab=readme-ov-file#database)).
 
 Les entités sont les suivantes:
 
@@ -35,10 +35,21 @@ Les entités sont les suivantes:
 |location|varchar(255)|
 |beginDate|DateTime|
 |endDate|DateTime|
+|author|ManyToOne(inversedBy: 'events')|
+
+- `User`
+
+|Colonne|Type|
+|-------|----|
+|email|varchar(180), unique|
+|username|varchar(255), unique|
+|password|varchar|
+|isVerified|boolean|
+|events|OneToMany(mappedBy: 'author', targetEntity: Event::class, orphanRemoval: true)|
 
 ## Fixtures
 
-Une fixture est disponible pour auto-générer 9 événements.
+Deux fixtures sont disponibles pour auto-générer quelques événements utilisateurs. Pour ces fixtures, j'ai utilisé [FakerPHP](https://fakerphp.github.io/).
 
 Pour charger les fixtures:
 
