@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}My first page in this project!{% endblock %}
+{% block title %}Super site dynamique !!{% endblock %}
 
 {% block body %}
     <div class="page homepage">
@@ -28,30 +28,71 @@
         <section id="evenements">
             <div class="container-section-title">
                 <twig:FancyUnderlinedText>
-                    <h2>Les événements prévus ({{ events|length }})</h2>
+                    <h2>Les événements prévus ({{ count }})</h2>
                 </twig:FancyUnderlinedText>
             </div>
             <p>Les événements sont triés dans l’ordre chronologique par défaut. Vous pouvez affiner cela en choisissant un intervalle de dates :</p>
-            <form method="GET">
+            <!-- action="#evenements" permet de scroller automatiquement vers la grille des événements au rechargement de la page après soumission du formulaire -->
+            <form method="GET" action="#evenements">
+                <!-- la soumission de ce formulaire remet "page" à 0 -->
                 <p>
                     Sélectionner les événements du&nbsp;
-                    <input type="date" placeholder="dd/mm/aaaa" title="Date minimale" name="min" required />
+                    <input type="date" placeholder="dd/mm/aaaa" title="Date minimale" name="debut" value="{{ debut }}" />
                     &nbsp;au&nbsp;
-                    <input type="date" placeholder="dd/mm/aaaa" title="Date maximale" name="max" required />
+                    <input type="date" placeholder="dd/mm/aaaa" title="Date maximale" name="fin" value="{{ fin }}" />
                     &nbsp;
                     <input type="submit" value="Appliquer" />
                 </p>
             </form>
             <div class="event-grid">
-                {% for event in events %}
-                    <div class="event-card">
-                        <h3>{{ event.title }}</h3>
-                        <div></div>
-                        <p>Du {{ event.beginDate|date("d/m/Y", "Europe/Paris") }}, {{ event.beginDate|date("H:m", "Europe/Paris") }}, au {{ event.endDate|date("d/m/Y", "Europe/Paris") }}, {{ event.endDate|date("H:m", "Europe/Paris") }}</p>
-                        <p>{{ event.description }}</p>
-                    </div>
-                {% endfor %}
+                {% if events|length > 0 %}
+                    {% for event in events %}
+                        <div class="event-card">
+                            <h3>{{ event.title }}</h3>
+                            <div></div>
+                            <p>Du {{ event.beginDate|date("d/m/Y", "Europe/Paris") }}, {{ event.beginDate|date("H:m", "Europe/Paris") }}, au {{ event.endDate|date("d/m/Y", "Europe/Paris") }}, {{ event.endDate|date("H:m", "Europe/Paris") }}</p>
+                            <p>{{ event.description }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% if page * eventsPerPage > count %}
+                        <!-- la page dans l'URL est trop grande -->
+                        <p class="no-event-message">Oh non, il n'y a rien à charger pour cette page. <a href="{{ path('index') }}">Mettre à jour</a>.</p>
+                    {% else %}
+                        {% if debut or fin %}
+                            <p class="no-event-message">Oh non, il n'y a aucun événement pour la plage de dates données !</p>
+                        {% else %}
+                            <p class="no-event-message">Oh non, il n'y a aucun événement !</p>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
             </div>
+            {% if events|length > 0 %}
+                <div class="pages-controls">
+                    {% if page > 0 %}
+                        <form class="page-container" method="GET" action="#evenements">
+                            {% if debut %} <input type="hidden" value="{{ debut }}" name="debut" /> {% endif %}
+                            {% if fin %} <input type="hidden" value="{{ fin }}" name="fin" /> {% endif %}
+                            <input type="hidden" name="page" value="{{ page - 1 }}" />
+                            <button type="submit">
+                                &lt; Page {{ page }}
+                            </button>
+                        </form>
+                    {% else %}
+                        <div></div>
+                    {% endif %}
+                    {% if (page * eventsPerPage + eventsPerPage < count) %}
+                        <form class="page-container" method="GET" action="#evenements">
+                            {% if debut %} <input type="hidden" value="{{ debut }}" name="debut" /> {% endif %}
+                            {% if fin %} <input type="hidden" value="{{ fin }}" name="fin" /> {% endif %}
+                            <input type="hidden" name="page" value="{{ page + 1 }}" />
+                            <button type="submit">
+                                Page {{ page + 2 }} &gt;
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endif %}
         </section>
         <footer>
             <twig:FooterBackgroundImage />

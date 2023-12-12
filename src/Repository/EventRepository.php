@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use DateTime;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,28 +22,92 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-//    /**
-//     * @return Event[] Returns an array of Event objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * Finds the events in between two specific dates.
+     */
+    public function findBetweenDates(DateTime $begin, DateTime $end, int $offset, int $max): array
+    {
+        return [
+            "count" => $this->createQueryBuilder('e')
+                ->select("count(e.id)")
+                ->andWhere('e.beginDate >= :begin')
+                ->andWhere('e.endDate <= :end')
+                ->setParameter('begin', $begin)
+                ->setParameter('end', $end)
+                ->getQuery()
+                ->getSingleScalarResult(),
+            "events" => $this->createQueryBuilder('e')
+                ->andWhere('e.beginDate >= :begin')
+                ->andWhere('e.endDate <= :end')
+                ->setParameter('begin', $begin)
+                ->setParameter('end', $end)
+                ->orderBy('e.beginDate', 'ASC')
+                ->setFirstResult($offset)
+                ->setMaxResults($max)
+                ->getQuery()
+                ->getResult()
+        ];
+    }
 
-//    public function findOneBySomeField($value): ?Event
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * Finds the events after a specific date.
+     */
+    public function findAfterDate(DateTime $begin, int $offset, int $max): array
+    {
+        return [
+            "count" => $this->createQueryBuilder('e')
+                ->select("count(e.id)")
+                ->andWhere('e.beginDate >= :begin')
+                ->setParameter('begin', $begin)
+                ->getQuery()
+                ->getSingleScalarResult(),
+            "events" => $this->createQueryBuilder('e')
+                ->andWhere('e.beginDate >= :begin')
+                ->setParameter('begin', $begin)
+                ->orderBy('e.beginDate', 'ASC')
+                ->setFirstResult($offset)
+                ->setMaxResults($max)
+                ->getQuery()
+                ->getResult()
+        ];
+    }
+
+    /**
+     * Finds the events before a specific date.
+     */
+    public function findBeforeDate(DateTime $end, int $offset, int $max): array
+    {
+        return [
+            "count" => $this->createQueryBuilder('e')
+                ->select("count(e.id)")
+                ->andWhere('e.endDate <= :end')
+                ->setParameter('end', $end)
+                ->getQuery()
+                ->getSingleScalarResult(),
+            "events" => $this->createQueryBuilder('e')
+                ->andWhere('e.endDate <= :end')
+                ->setParameter('end', $end)
+                ->orderBy('e.endDate', 'DESC')
+                ->setFirstResult($offset)
+                ->setMaxResults($max)
+                ->getQuery()
+                ->getResult()
+        ];
+    }
+
+    /**
+     * Finds and orders the events between $offset and $max.
+     */
+    public function findPage(int $offset, int $max): array
+    {
+        return [
+            "count" => $this->count([]),
+            "events" => $this->createQueryBuilder('e')
+                ->orderBy('e.beginDate', 'ASC')
+                ->setFirstResult($offset)
+                ->setMaxResults($max)
+                ->getQuery()
+                ->getResult()
+        ];
+    }
 }

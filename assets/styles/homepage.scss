@@ -168,6 +168,41 @@ $homepage-padding: 0 9vw;
   }
 }
 
+p.no-event-message {
+  color: #fff;
+  width: 100%;
+  font-size: 2rem;
+  text-align: center;
+
+  a {
+    color: $link-color;
+  }
+}
+
+.pages-controls {
+  margin: 50px 0;
+  padding: 0 40px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    background-color: transparent;
+    font-size: 1.3rem;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    opacity: .8;
+    transition: opacity 300ms ease;
+
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+  }
+}
+
 /*
 *
 * Footer
