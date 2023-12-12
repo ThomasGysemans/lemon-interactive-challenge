@@ -18,8 +18,8 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
             $event = new Event();
             $event->setTitle($faker->sentence(5));
             $event->setLocation($faker->city());
-            $event->setBeginDate($faker->dateTime('2024-01-01 12:57:0'));
-            $event->setEndDate($faker->dateTime('2024-01-30 12:57:0'));
+            $event->setBeginDate($faker->dateTimeBetween('-1 week', '+3 week'));
+            $event->setEndDate($faker->dateTimeBetween('+3 week', '+5 week'));
             $event->setDescription($faker->text(500));
             $event->setAuthor($this->getReference('user-' . rand(0, 2))); // apparently the max value is included
             $manager->persist($event);
