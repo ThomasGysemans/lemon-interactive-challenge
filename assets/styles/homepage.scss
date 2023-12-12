@@ -114,8 +114,20 @@ $homepage-padding: 0 9vw;
 .homepage > section > form input {
   padding: 5px 10px;
 
-  &[type="submit"] {
+  &[type="submit"],
+  &[type="reset"] {
     cursor: pointer;
+  }
+}
+
+// the goal here is to make the link look like the <input type="reset" />
+// But the input resets the values of the form, and the link resets the query parameters,
+// we save some time and energy by using a <input type="reset" /> if we know there is no query parameter
+.reset-filters {
+  text-decoration: none;
+
+  button {
+    padding: 5px 10px;
   }
 }
 

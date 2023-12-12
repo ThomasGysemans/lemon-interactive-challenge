@@ -42,6 +42,13 @@
                     <input type="date" placeholder="dd/mm/aaaa" title="Date maximale" name="fin" value="{{ fin }}" />
                     &nbsp;
                     <input type="submit" value="Appliquer" />
+                    {% if debut or fin %}
+                        <a href="{{ path('index') }}#evenements" class="reset-filters">
+                            <button type="button">Réinitialiser</button>
+                        </a>
+                    {% else %}
+                        <input type="reset" value="Réinitialiser" />
+                    {% endif %}
                 </p>
             </form>
             <div class="event-grid">
