@@ -12,7 +12,7 @@ class UserFixture extends Fixture
 {
     // this constant is very important,
     // as it also controls the amount of references we can use in `./EventFixtures.php`.
-    public const NUMBER_OF_USERS = 3 + 1; // +1 to count the known User
+    public const NUMBER_OF_USERS = 4; // 3 +1 to count the known User
 
     /**
      * This is the password of the generated user we can log in as.
@@ -30,7 +30,7 @@ class UserFixture extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
         
-        for ($i = 0; $i < UserFixture::NUMBER_OF_USERS - 1; $i++) { // -1 because we want N - 1 random users, and 1 known user
+        for ($i = 1; $i <= UserFixture::NUMBER_OF_USERS - 1; $i++) {
             $user = new User();
             $user->setEmail($faker->email());
             $user->setUsername($faker->name());
@@ -45,7 +45,7 @@ class UserFixture extends Fixture
         $knownUser->setUsername($faker->userName());
         $knownUser->setPassword($this->hashPassword(null, UserFixture::KNOWN_USER_PASSWORD));
         $manager->persist($knownUser);
-        $this->addReference('user-' . $i, $user);
+        $this->addReference('user-' . UserFixture::NUMBER_OF_USERS, $knownUser);
         
         $manager->flush();
     }
