@@ -28,12 +28,19 @@
         <section id="evenements">
             <div class="container-section-title">
                 <twig:FancyUnderlinedText>
-                    <h2>Les événements prévus ({{ count }})</h2>
+                    {% if showingEventsOfUser %}
+                        <h2>Vos événements ({{ count }})</h2>
+                    {% else %}
+                        <h2>Les événements prévus ({{ count }})</h2>
+                    {% endif %}
                 </twig:FancyUnderlinedText>
             </div>
             <p>Les événements sont triés dans l’ordre chronologique par défaut. Vous pouvez affiner cela en choisissant un intervalle de dates :</p>
             <!-- action="#evenements" permet de scroller automatiquement vers la grille des événements au rechargement de la page après soumission du formulaire -->
             <form method="GET" action="#evenements">
+                {% if showingEventsOfUser %}
+                    <input type="hidden" name="own" />
+                {% endif %}
                 <!-- la soumission de ce formulaire remet "page" à 0 -->
                 <p>
                     Sélectionner les événements du&nbsp;
@@ -51,6 +58,11 @@
                     {% endif %}
                 </p>
             </form>
+            {% if showingEventsOfUser %}
+                <p>Voir <a href="{{ path('index') }}#evenements">tous les événements</a> ?</p>
+            {% else %}
+                <p>Voir uniquement <a href="{{ path('index') }}?own#evenements">vos événements</a> (événements auxquels vous êtes inscrits) ?</p>
+            {% endif %}
             <div class="event-grid">
                 {% if events|length > 0 %}
                     {% for event in events %}
@@ -81,6 +93,7 @@
                         <form class="page-container" method="GET" action="#evenements">
                             {% if debut %} <input type="hidden" value="{{ debut }}" name="debut" /> {% endif %}
                             {% if fin %} <input type="hidden" value="{{ fin }}" name="fin" /> {% endif %}
+                            {% if showingEventsOfUser %} <input type="hidden" name="own" /> {% endif %}
                             <input type="hidden" name="page" value="{{ page - 1 }}" />
                             <button type="submit">
                                 &lt; Page {{ page }}
@@ -93,6 +106,7 @@
                         <form class="page-container" method="GET" action="#evenements">
                             {% if debut %} <input type="hidden" value="{{ debut }}" name="debut" /> {% endif %}
                             {% if fin %} <input type="hidden" value="{{ fin }}" name="fin" /> {% endif %}
+                            {% if showingEventsOfUser %} <input type="hidden" name="own" /> {% endif %}
                             <input type="hidden" name="page" value="{{ page + 1 }}" />
                             <button type="submit">
                                 Page {{ page + 2 }} &gt;

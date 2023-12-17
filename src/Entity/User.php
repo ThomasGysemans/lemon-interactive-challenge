@@ -40,9 +40,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Event::class, orphanRemoval: true)]
     private Collection $events;
 
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'subscribers')]
+    private Collection $participations;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -50,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -164,6 +168,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($event->getAuthor() === $this) {
                 $event->setAuthor(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getParticipations(): Collection
+    {
+        return $this->participations;
+    }
+
+    public function addParticipation(Event $participation): static
+    {
+        if (!$this->participations->contains($participation)) {
+            $this->participations->add($participation);
+            $participation->addSubscriber($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipation(Event $participation): static
+    {
+        if ($this->participations->removeElement($participation)) {
+            $participation->removeSubscriber($this);
         }
 
         return $this;

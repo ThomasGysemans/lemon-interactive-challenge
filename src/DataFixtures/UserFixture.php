@@ -18,6 +18,9 @@ class UserFixture extends Fixture
      * This is the password of the generated user we can log in as.
      * What's nice about this user is that we can reload the fixtures
      * and still have a user to log in with and do the tests that require authentication.
+     * 
+     * NOTE: the known user will be participating to half of the events (in average), see EventFixtures.
+     * The "participations" column will not get populated in any fixture.
      */
     private const KNOWN_USER_PASSWORD = "123456Aa#";
     

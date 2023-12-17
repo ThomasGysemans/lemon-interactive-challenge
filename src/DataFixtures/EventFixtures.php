@@ -22,6 +22,10 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
             $event->setEndDate($faker->dateTimeBetween('+3 week', '+5 week'));
             $event->setDescription($faker->text(500));
             $event->setAuthor($this->getReference('user-' . rand(1, UserFixture::NUMBER_OF_USERS))); // apparently the max value is included
+            // The known user has a 50% chance of participating to this event
+            if (rand(0, 100) > 50) {
+                $event->addSubscriber($this->getReference('user-' . UserFixture::NUMBER_OF_USERS));
+            }
             $manager->persist($event);
         }
 
