@@ -75,12 +75,18 @@
                             {% if app.user %}
                                 <div class="event-card-actions">
                                     <input type="hidden" name="event" value="{{ event.id }}">
-                                    {% if hasSubscriber(event, app.user) %}
-                                        <input type="hidden" name="registered" value="true" />
-                                        <input type="submit" value="Se désinscrire" />
+                                    {% if event.author.id == app.user.id %}
+                                        <input type="hidden" name="delete" />
+                                        <button type="button">Modifier</button>
+                                        <button type="submit" formaction="{{ path('post_events_submissions') }}">Supprimer</button>
                                     {% else %}
-                                        <input type="hidden" name="registered" value="false" />
-                                        <input type="submit" value="S'inscrire" />
+                                        {% if hasSubscriber(event, app.user) %}
+                                            <input type="hidden" name="registered" value="true" />
+                                            <input type="submit" value="Se désinscrire" />
+                                        {% else %}
+                                            <input type="hidden" name="registered" value="false" />
+                                            <input type="submit" value="S'inscrire" />
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             {% endif %}

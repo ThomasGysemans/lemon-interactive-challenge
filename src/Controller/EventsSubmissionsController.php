@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Event;
+use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,33 +18,50 @@ class EventsSubmissionsController extends AbstractController
     #[Route('/events_submissions', name: 'post_events_submissions')]
     public function index(
         UserRepository $userRepository,
+        EventRepository $eventRepository,
         EntityManagerInterface $entityManager
     ): Response
     {
         $request = Request::createFromGlobals();
         if ($request->isMethod("POST")) {
-            $author = $userRepository->find(intval($request->request->get("author")));
-            if (is_null($author)) return $this->goback();
-            $title = trim($request->request->get("title"));
-            $location = trim($request->request->get("location"));
-            $beginDate = new DateTime($request->request->get("beginDate"));
-            $endDate = new DateTime($request->request->get("endDate"));
-            $description = trim($request->request->get("description"));
-            if (strlen($description) > 500) return $this->goback();
-            if (strlen($location) > 50) return $this->goback();
-            if (strlen($title) > 50) return $this->goback();
-            $event = new Event();
-            $event->setAuthor($author);
-            $event->setTitle($title);
-            $event->setLocation($location);
-            $event->setBeginDate($beginDate);
-            $event->setEndDate($endDate);
-            $event->setDescription($description);
-            $entityManager->persist($event);
-            $entityManager->flush();
+            $isDelete = $request->request->has("delete");
+            if ($isDelete) {
+                $this->handleEventDeletion($request, $eventRepository);
+            } else {
+                return $this->handleEventCreation($request, $userRepository, $entityManager);
+            }
         }
         
         return $this->goback();
+    }
+
+    private function handleEventCreation(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $author = $userRepository->find(intval($request->request->get("author")));
+        if (is_null($author)) return $this->goback();
+        $title = trim($request->request->get("title"));
+        $location = trim($request->request->get("location"));
+        $beginDate = new DateTime($request->request->get("beginDate"));
+        $endDate = new DateTime($request->request->get("endDate"));
+        $description = trim($request->request->get("description"));
+        if (strlen($description) > 500) return $this->goback();
+        if (strlen($location) > 50) return $this->goback();
+        if (strlen($title) > 50) return $this->goback();
+        $event = new Event();
+        $event->setAuthor($author);
+        $event->setTitle($title);
+        $event->setLocation($location);
+        $event->setBeginDate($beginDate);
+        $event->setEndDate($endDate);
+        $event->setDescription($description);
+        $entityManager->persist($event);
+        $entityManager->flush();
+        return $this->goback();
+    }
+    
+    private function handleEventDeletion(Request $request, EventRepository $eventRepository): void
+    {
+        $eventRepository->deleteEvent(intval($request->request->get("event")));
     }
 
     private function goback(): RedirectResponse

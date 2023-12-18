@@ -25,6 +25,17 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    public function deleteEvent(int $eventId): bool
+    {
+        return $this
+            ->createQueryBuilder('e')
+            ->delete()
+            ->where('e.id = :id')
+            ->setParameter('id', $eventId)
+            ->getQuery()
+            ->getResult() == 1;
+    }
+
     /**
      * Finds the events in between two specific dates.
      */
@@ -207,7 +218,8 @@ class EventRepository extends ServiceEntityRepository
     private function joinsUserEvents(int $userId, QueryBuilder $q): Query
     {
         return $q
-            ->innerJoin('e.subscribers', 's', Expr\Join::WITH, "s.id = $userId")
+            ->innerJoin('e.subscribers', 's', Expr\Join::WITH, "s.id = :userid")
+            ->setParameter('userid', $userId)
             ->getQuery();
     }
 }
