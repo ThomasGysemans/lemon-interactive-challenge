@@ -35,13 +35,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $username = null;
 
     #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
+    private bool $isVerified = false;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Event::class, orphanRemoval: true)]
     private Collection $events;
 
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'subscribers')]
     private Collection $participations;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $canCreateEvents = false;
 
     public function __construct()
     {
@@ -196,6 +199,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->participations->removeElement($participation)) {
             $participation->removeSubscriber($this);
         }
+
+        return $this;
+    }
+
+    public function isCanCreateEvents(): ?bool
+    {
+        return $this->canCreateEvents;
+    }
+
+    public function setCanCreateEvents(bool $canCreateEvents): static
+    {
+        $this->canCreateEvents = $canCreateEvents;
 
         return $this;
     }

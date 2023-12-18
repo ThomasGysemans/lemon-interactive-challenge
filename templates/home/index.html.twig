@@ -44,9 +44,9 @@
                 <!-- la soumission de ce formulaire remet "page" à 0 -->
                 <p>
                     Sélectionner les événements du&nbsp;
-                    <input type="date" placeholder="dd/mm/aaaa" title="Date minimale" name="debut" value="{{ debut }}" />
+                    <input type="date" placeholder="jj/mm/aaaa" title="Date minimale" name="debut" value="{{ debut }}" />
                     &nbsp;au&nbsp;
-                    <input type="date" placeholder="dd/mm/aaaa" title="Date maximale" name="fin" value="{{ fin }}" />
+                    <input type="date" placeholder="jj/mm/aaaa" title="Date maximale" name="fin" value="{{ fin }}" />
                     &nbsp;
                     <input type="submit" value="Appliquer" />
                     {% if debut or fin %}
@@ -163,5 +163,23 @@
                 </div>
             </div>
         </footer>
+        {% if app.user.canCreateEvents %}
+            <button class="button-add-event" type="button" id="show-modal">
+                CLIQUE
+            </button>
+        {% endif %}
     </div>
+
+    <twig:Modal />
+
+    <script>
+        const modal = document.querySelector("dialog");
+        const showButton = document.querySelector("#show-modal");
+        const closeButtons = document.querySelectorAll("[data-close-modal]");
+
+        showButton.addEventListener("click", () => modal.showModal());
+        for (const btn of closeButtons) {
+            btn.addEventListener("click", () => modal.close());
+        }
+    </script>
 {% endblock %}

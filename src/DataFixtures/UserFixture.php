@@ -47,6 +47,7 @@ class UserFixture extends Fixture
         $knownUser->setEmail(UserFixture::KNOWN_USER_EMAIL);
         $knownUser->setUsername($faker->userName());
         $knownUser->setPassword($this->hashPassword(null, UserFixture::KNOWN_USER_PASSWORD));
+        $knownUser->setCanCreateEvents(true); // The known user is the only one able to create/edit/delete events
         $manager->persist($knownUser);
         $this->addReference('user-' . UserFixture::NUMBER_OF_USERS, $knownUser);
         

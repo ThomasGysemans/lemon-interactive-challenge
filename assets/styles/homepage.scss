@@ -327,3 +327,17 @@ footer {
     }
   }
 }
+
+.button-add-event {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background-color: $link-color;
+  color: #fff;
+  font-size: 1.1rem;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}

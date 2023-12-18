@@ -2,7 +2,8 @@
 
 // This file handles the styles for the inputs of "/connexion" and "/inscription".
 
-input.main-input {
+input.main-input,
+textarea.main-input {
   display: block;
   color: #fff;
   padding: 5px 15px;
@@ -16,4 +17,9 @@ input.main-input {
   &::placeholder {
     color: rgba(#fff, .5);
   }
+}
+
+input.main-input[type="date"] {
+  display: inline-block;
+  width: 170px;
 }
