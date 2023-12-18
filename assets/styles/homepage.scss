@@ -151,7 +151,7 @@ $homepage-padding: 0 9vw;
 
 .event-card {
   width: 100%;
-  max-height: 450px;
+  max-height: 480px;
   background-color: $secondary-color;
   padding: 20px;
   border-radius: 10px;
@@ -211,6 +211,30 @@ p.no-event-message {
     color: #fff;
     opacity: .8;
     transition: opacity 300ms ease;
+
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+  }
+}
+
+.event-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+
+  input {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: #fff;
+    font-size: 1.05rem;
+    text-decoration: underline;
+    opacity: .8;
+    padding: 0;
+    display: inline;
 
     &:hover,
     &:focus {

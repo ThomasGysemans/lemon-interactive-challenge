@@ -66,13 +66,25 @@
             <div class="event-grid">
                 {% if events|length > 0 %}
                     {% for event in events %}
-                        <div class="event-card">
+                        <form method="POST" action="{{ path('post_subscriptions') }}" class="event-card">
                             <h3>{{ event.title }}</h3>
                             <div></div>
                             <p>Lieu : {{ event.location }}</p>
                             <p>Du {{ event.beginDate|date("d/m/Y", "Europe/Paris") }}, {{ event.beginDate|date("H:m", "Europe/Paris") }}, au {{ event.endDate|date("d/m/Y", "Europe/Paris") }}, {{ event.endDate|date("H:m", "Europe/Paris") }}</p>
                             <p>{{ event.description }}</p>
-                        </div>
+                            {% if app.user %}
+                                <div class="event-card-actions">
+                                    <input type="hidden" name="event" value="{{ event.id }}">
+                                    {% if hasSubscriber(event, app.user) %}
+                                        <input type="hidden" name="registered" value="true" />
+                                        <input type="submit" value="Se désinscrire" />
+                                    {% else %}
+                                        <input type="hidden" name="registered" value="false" />
+                                        <input type="submit" value="S'inscrire" />
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </form>
                     {% endfor %}
                 {% else %}
                     {% if page * eventsPerPage > count %}

@@ -128,6 +128,11 @@ class Event
         return $this->subscribers;
     }
 
+    public function hasSubscriber(User $user): bool
+    {
+        return $this->subscribers->contains($user);
+    }
+
     public function addSubscriber(User $subscriber): static
     {
         if (!$this->subscribers->contains($subscriber)) {
