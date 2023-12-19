@@ -35,7 +35,10 @@ Les entités sont les suivantes:
 |location|varchar(255)|
 |beginDate|DateTime|
 |endDate|DateTime|
+|subscribers|ManyToMany(inversedBy: 'participations')|
 |author|ManyToOne(inversedBy: 'events')|
+
+> **NOTE**: L'event a des "abonnés" ("subscribers") c'est-à-dire des utilisateurs qui s'y sont inscrits.
 
 - `User`
 
@@ -45,7 +48,11 @@ Les entités sont les suivantes:
 |username|varchar(255), unique|
 |password|varchar|
 |isVerified|boolean|
-|events|OneToMany(mappedBy: 'author', targetEntity: Event::class, orphanRemoval: true)|
+|canCreateEvents|boolean|
+|participations|ManyToMany(inversedBy: 'subscribers')|
+|events|OneToMany(mappedBy: 'author', orphanRemoval: true)|
+
+> **NOTE**: puisque le sujet n'était pas très clair selon moi, j'ai fait en sorte qu'un seul utilisateur peut ajouter/modifier/supprimer des événements.
 
 ## Fixtures
 
