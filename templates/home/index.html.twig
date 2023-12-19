@@ -70,7 +70,7 @@
                             <h3>{{ event.title }}</h3>
                             <div></div>
                             <p>Lieu : {{ event.location }}</p>
-                            <p>Du {{ event.beginDate|date("d/m/Y", "Europe/Paris") }}, {{ event.beginDate|date("H:m", "Europe/Paris") }}, au {{ event.endDate|date("d/m/Y", "Europe/Paris") }}, {{ event.endDate|date("H:m", "Europe/Paris") }}</p>
+                            <p>Du {{ event.beginDate|date("d/m/Y", "Europe/Paris") }} au {{ event.endDate|date("d/m/Y", "Europe/Paris") }}</p>
                             <p>{{ event.description }}</p>
                             {% if app.user %}
                                 <div class="event-card-actions">
