@@ -148,4 +148,23 @@ class Event
 
         return $this;
     }
+
+    /**
+     * Returns valid JSON that JavaScript can use.
+     */
+    public function stringify(): string
+    {
+        $beginDateFormatted = $this->beginDate->format("Y-m-d");
+        $endDateFormatted = $this->endDate->format("Y-m-d");
+        return <<<HEREDOC
+            {
+                "id": $this->id,
+                "title": "$this->title",
+                "location": "$this->location",
+                "description": "$this->description",
+                "beginDate": "$beginDateFormatted",
+                "endDate": "$endDateFormatted"
+            }
+        HEREDOC;
+    }
 }

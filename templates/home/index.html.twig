@@ -77,7 +77,7 @@
                                     <input type="hidden" name="event" value="{{ event.id }}">
                                     {% if event.author.id == app.user.id %}
                                         <input type="hidden" name="delete" />
-                                        <button type="button">Modifier</button>
+                                        <button type="button" onclick="handleEventModification('{{ stringifyEvent(event) }}')">Modifier</button>
                                         <button type="submit" formaction="{{ path('post_events_submissions') }}">Supprimer</button>
                                     {% else %}
                                         {% if hasSubscriber(event, app.user) %}
@@ -186,6 +186,22 @@
         showButton.addEventListener("click", () => modal.showModal());
         for (const btn of closeButtons) {
             btn.addEventListener("click", () => modal.close());
+        }
+
+        function handleEventModification(stringifiedEvent) {
+            try {
+                const parsed = JSON.parse(stringifiedEvent);
+                modal.querySelector("input[name='event']").value = parsed.id;
+                modal.querySelector("input[name='title']").value = parsed.title;
+                modal.querySelector("input[name='location']").value = parsed.location;
+                modal.querySelector("input[name='beginDate']").value = parsed.beginDate;
+                modal.querySelector("input[name='endDate']").value = parsed.endDate;
+                modal.querySelector("textarea[name='description']").value = parsed.description;
+                modal.showModal();
+            } catch (e) {
+                console.error(e);
+                alert("Impossible de modifier cet événement.");
+            }
         }
     </script>
 {% endblock %}

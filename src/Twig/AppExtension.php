@@ -13,11 +13,17 @@ class AppExtension extends AbstractExtension
   {
     return [
       new TwigFunction('hasSubscriber', [$this, 'hasSubscriber']),
+      new TwigFunction('stringifyEvent', [$this, 'stringifyEvent']),
     ];
   }
 
   public function hasSubscriber(Event $event, User $user): bool
   {
     return $event->hasSubscriber($user);
+  }
+
+  public function stringifyEvent(Event $event): string
+  {
+    return str_replace("\n", "", $event->stringify()); // necessary
   }
 }
