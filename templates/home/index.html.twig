@@ -169,39 +169,41 @@
                 </div>
             </div>
         </footer>
-        {% if app.user.canCreateEvents %}
+        {% if app.user and app.user.canCreateEvents %}
             <button class="button-add-event" type="button" id="show-modal">
                 CLIQUE
             </button>
         {% endif %}
     </div>
 
-    <twig:Modal />
+    {% if app.user %}
+        <twig:Modal />
+        
+        <script>
+            const modal = document.querySelector("dialog");
+            const showButton = document.querySelector("#show-modal");
+            const closeButtons = document.querySelectorAll("[data-close-modal]");
 
-    <script>
-        const modal = document.querySelector("dialog");
-        const showButton = document.querySelector("#show-modal");
-        const closeButtons = document.querySelectorAll("[data-close-modal]");
-
-        showButton.addEventListener("click", () => modal.showModal());
-        for (const btn of closeButtons) {
-            btn.addEventListener("click", () => modal.close());
-        }
-
-        function handleEventModification(stringifiedEvent) {
-            try {
-                const parsed = JSON.parse(stringifiedEvent);
-                modal.querySelector("input[name='event']").value = parsed.id;
-                modal.querySelector("input[name='title']").value = parsed.title;
-                modal.querySelector("input[name='location']").value = parsed.location;
-                modal.querySelector("input[name='beginDate']").value = parsed.beginDate;
-                modal.querySelector("input[name='endDate']").value = parsed.endDate;
-                modal.querySelector("textarea[name='description']").value = parsed.description;
-                modal.showModal();
-            } catch (e) {
-                console.error(e);
-                alert("Impossible de modifier cet événement.");
+            showButton.addEventListener("click", () => modal.showModal());
+            for (const btn of closeButtons) {
+                btn.addEventListener("click", () => modal.close());
             }
-        }
-    </script>
+
+            function handleEventModification(stringifiedEvent) {
+                try {
+                    const parsed = JSON.parse(stringifiedEvent);
+                    modal.querySelector("input[name='event']").value = parsed.id;
+                    modal.querySelector("input[name='title']").value = parsed.title;
+                    modal.querySelector("input[name='location']").value = parsed.location;
+                    modal.querySelector("input[name='beginDate']").value = parsed.beginDate;
+                    modal.querySelector("input[name='endDate']").value = parsed.endDate;
+                    modal.querySelector("textarea[name='description']").value = parsed.description;
+                    modal.showModal();
+                } catch (e) {
+                    console.error(e);
+                    alert("Impossible de modifier cet événement.");
+                }
+            }
+        </script>
+    {% endif %}
 {% endblock %}
