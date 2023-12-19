@@ -58,10 +58,12 @@
                     {% endif %}
                 </p>
             </form>
-            {% if showingEventsOfUser %}
-                <p>Voir <a href="{{ path('index') }}#evenements">tous les événements</a> ?</p>
-            {% else %}
-                <p>Voir uniquement <a href="{{ path('index') }}?own#evenements">vos événements</a> (événements auxquels vous êtes inscrits) ?</p>
+            {% if app.user %}
+                {% if showingEventsOfUser %}
+                    <p>Voir <a href="{{ path('index') }}#evenements">tous les événements</a> ?</p>
+                {% else %}
+                    <p>Voir uniquement <a href="{{ path('index') }}?own#evenements">vos événements</a> (événements auxquels vous êtes inscrits) ?</p>
+                {% endif %}
             {% endif %}
             <div class="event-grid">
                 {% if events|length > 0 %}
