@@ -4,7 +4,6 @@
 // This page is responsible for the styles of both "/connexion" and "/inscription"
 
 $aside-width: 55%;
-$text-font-size: 1.3rem;
 
 .auth {
   width: 100%;
@@ -14,20 +13,24 @@ $text-font-size: 1.3rem;
   @include row-center;
 }
 
+.auth > aside p,
+.auth > form > p a {
+  font-size: 1.3rem;
+}
+
 .auth > aside {
   width: $aside-width;
   margin-right: 7vw;
 
   h1 {
     color: #fff;
-    margin: 0;
     font-size: 2.7rem;
+    margin: 0;
   }
 
   p {
     color: #fff;
     margin: 30px 0;
-    font-size: $text-font-size;
   }
 
   a {
@@ -59,7 +62,6 @@ $text-font-size: 1.3rem;
 
   a {
     color: $link-color;
-    font-size: $text-font-size;
   }
 }
 
@@ -79,4 +81,35 @@ $text-font-size: 1.3rem;
 .auth p.error {
   color: red;
   margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+  .auth {
+    padding: 10vh 10vw;
+  }
+
+  .auth > aside p,
+  .auth > form > p a {
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .auth {
+    height: 100%;
+    min-height: 100vh;
+    flex-direction: column-reverse;
+    padding-top: 22vh;
+  }
+
+  .auth > aside {
+    width: 80%;
+    min-width: 250px;
+    margin-right: 0;
+    margin-top: 30px;
+  }
+
+  .auth > form {
+    width: 100%;
+  }
 }
