@@ -4,6 +4,16 @@ Ce repo contient le code du défi posé par [Lemon Interactive](https://www.lemo
 
 ![Image de la première page du site](/screenshots/maquette-homepage.jpg)
 
+## Lancer le projet
+
+Pour lancer le projet:
+
+```bash
+composer install
+make build # elle produit les assets en mode prod
+make preview # démarre un serveur php en localhost:9090
+```
+
 ## Auteur
 
 [Thomas GYSEMANS](https://portfolio.sciencesky.fr/), actuellement en étude d'informatique au BUT de Villeneuve d'Ascq.
@@ -63,6 +73,15 @@ Pour charger les fixtures:
 ```bash
 make load_fictures
 ```
+
+## Utilisateur unique
+
+Les fixtures créent quelques utilisateurs. Si vous souhaitez vous connecter, il vous faut utiliser les identifiants suivants:
+
+- Adresse mail : `gysemansthomas@gmail.com`
+- Mot de passe : `123456Aa#`
+
+> **NOTE**: vous pouvez changer cela dans [UserFixture](./src/DataFixtures/UserFixture.php).
 
 ## Makefile
 

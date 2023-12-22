@@ -27,6 +27,7 @@ load_fixtures: bin/console
 	${PHP} doctrine:fixtures:load
 
 build:
+	${PHP} cache:clear --env=prod --no-debug
 	${PHP} sass:build -v
 	${PHP} typescript:build -v
 	${PHP} asset-map:compile
@@ -35,6 +36,9 @@ dev:
 	${PHP} sass:build -q --watch &
 	${PHP} typescript:build -q --watch &
 	symfony server:start -d
+
+preview:
+	@php -S localhost:9090 -t public
 
 stop:
 	symfony server:stop
